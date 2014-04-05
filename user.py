@@ -10,10 +10,13 @@ class User():
     def take_mail(self):
         return self.mail
 
-    def update_user(self, name, mail):
+    def update_user(self, name, email):
         if name == "":
             pass
         else:
             self.name = name
-        self.mail = mail
 
+        if email == "":
+            pass
+        else:
+            self.email = email
