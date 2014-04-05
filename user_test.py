@@ -27,6 +27,22 @@ class UserTest(unittest.TestCase):
         self.user.update_user("", "ivanivanov@gmail.com")
         self.assertEqual("Ivan Ivanov", self.user.take_name())
         self.assertEqual("ivanivanov@gmail.com", self.user.take_mail())
+        
+
+    def test_get_name(self):
+        self.assertEqual('Ivan Ivanov', self.user.take_name())
+
+    def test_get_email(self):
+        self.assertEqual('ivan@gmail.com', self.user.take_email())
+
+    def test_update_user_name_changed(self):
+        self.user.update_user("Ivan Ivanov", "ivan@gmail.com")
+        exp_1 = "Ivan Ivanov"
+        exp_2 = "ivan@gmail.com"
+
+        self.assertEqual(exp_1, self.user.take_name())
+        self.assertEqual(exp_2, self.user.take_email())
+
 
 
 if __name__ == '__main__':
