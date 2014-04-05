@@ -1,24 +1,37 @@
-#import json
-#import os
-#from maillist import MailList
-#from maillist_factory import MailListFactory
+import json
+import os
+from maillist import MailList
+from maillist_factory import MailListFactory
 
-
-def update_subscriber(lists, list_id, user_id, user_name, user_email):
-    for item in lists:
-        if list_id == item.list_id:
-            item.users[user_id - 1].update_user(user_name, user_email)
-            return True
+def show_list(lists, id_list):
+    for list in lists:
+        if list.get_id() == id_list:
+            return list.print_()
     return False
 
 
-def remove_subscriber(lists, list_id, user_id):
-    for item in lists:
-        if list_id == item.list_id:
-            item.users = item.users[:user_id - 1] + item.users[user_id:]
+def show_lists(lists):
+    result = []
+    for list in lists:
+        result.append('[{0}] - {1}'.format(list.get_id(), list.get_name()))
+    result = sorted(result)
+    return '\n'.join(result)
 
 
-def search_email(lists, list_id, email):
-    for item in lists:
-        if list_id == item.list_id:
-            item.search_email(email)
+def create_new_list(lists, creating_new, new_list):
+    lists.append(creating_new.create(new_list))
+    print('New list <{0}> was created!'.format(new_list))
+
+
+def add_new_user(lists, id_list, name, email):
+    for i in range(len(lists)):
+        if lists[i].get_id() == list_id:
+            lists[i].add_user(name, email)
+            return True
+    print('List with unique identifier {} was not found!'.format(id_list))
+    return False
+
+
+
+
+

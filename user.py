@@ -1,22 +1,19 @@
 class User():
     """docstring for ClassName"""
-    def __init__(self, name, email):
+    def __init__(self, name, mail):
         self.name = name
-        self.email = email
+        self.mail = mail
 
     def take_name(self):
         return self.name
 
-    def take_email(self):
-        return self.email
+    def take_mail(self):
+        return self.mail
 
-    def update_user(self, name, email):
+    def update_user(self, name, mail):
         if name == "":
             pass
         else:
             self.name = name
+        self.mail = mail
 
-        if email == "":
-            pass
-        else:
-            self.email = email
