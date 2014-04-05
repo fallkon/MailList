@@ -1,31 +1,35 @@
 import unittest
-import mail
-from mail_list_factory import MailListFactory
+from mailList import MailList
 
 
-class TestMail(unittest.TestCase):
+class TestMaillist(unittest.TestCase):
 
     def setUp(self):
-        self.list = []
-        self.maillist_factory = MailListFactory()
-        self.list.append(self.maillist_factory.create("imperatorski"))
-        self.list[0].add_user("sar.Peio", "sarpeio@imperia.com")
-        self.list[0].add_user("sar.Oleg", "saroleg@imperia.com")
+        self.maillist = MailList(1, 'new list')
 
-    def test_update_subscriber(self):
-        mail.update_subscriber(self.list, 1, 1, "sar.PeioIII", "")
-        self.assertEqual("sar.PeioIII", self.list[0].users[0].take_name())
-        self.assertEqual("sarpeio@imperia.com", self.list[0].users[0].
-                         take_email())
+    def test_get_name(self):
+        self.assertEqual('new list', self.maillist.get_name())
 
-    def test_remove_subscriber(self):
-        mail.remove_subscriber(self.list, 1, 1)
-        expected = "[1] sar.Oleg - saroleg@imperia.com"
-        self.assertEqual(expected, self.list[0].print_user())
+    def test_add_user(self):
+        self.maillist.add_user("helgi", "helgi@gmail.com")
+        self.assertEqual(1, len(self.maillist.users))
+        self.assertEqual("helgi", self.maillist.users[0].name)
+        self.assertEqual("helgi@gmail.com", self.maillist.users[0].email)
+
+    def test_print_user(self):
+        self.maillist.add_user("helgi", "helgi@gmail.com")
+        expected = "[1] helgi - helgi@gmail.com"
+        self.assertEqual(expected, self.maillist.print_user())
 
     def test_search_email(self):
-        mail.search_email(self.list, 1, "sarpeio@imperia")
-        self.assertTrue(self.list[0].users[1].take_email())
+        self.maillist.add_user("helgi", "helgi@gmail.com")
+        self.assertFalse(self.maillist.search_email("ihfieurgh@gmail.com"))
+        self.assertTrue(self.maillist.search_email("helgi@gmail.com"))
+
+    def test_search_name(self):
+        self.maillist.add_user("helgi", "helgi@gmail.com")
+        self.assertFalse(self.maillist.search_name("juja"))
+        self.assertTrue(self.maillist.search_name("helgi"))
 
 
 if __name__ == '__main__':
